@@ -102,6 +102,12 @@ module Delayed
       end
     end
 
+    # Verify if job already exists in queue
+    
+    def self.exists?(object)
+      !find_by_handler(object.to_yaml).nil?
+    end
+    
     # Add a job to the queue
     def self.enqueue(*args, &block)
       object = block_given? ? EvaledJob.new(&block) : args.shift
